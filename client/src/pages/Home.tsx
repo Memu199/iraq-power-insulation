@@ -17,11 +17,11 @@ import {
 } from "lucide-react";
 
 const ASSETS = {
-  logo: "/manus-storage/iraq-power-logo_35a4f763.jpg",
-  hero: "/manus-storage/iraq-power-hero_1773786f.jpg",
-  door: "/manus-storage/iraq-power-door-detail_313e09c9.jpg",
-  roof: "/manus-storage/iraq-power-roof-detail_bf410580.jpg",
-  mark: "/manus-storage/iraq-power-mark_f9326e6d.png",
+  logo: "/assets/logo.jpg",
+  hero: "/assets/hero.jpg",
+  door: "/assets/door-detail.jpg",
+  roof: "/assets/roof-detail.jpg",
+  mark: "/assets/brand-mark.png",
 };
 
 type ServicePrice = {
