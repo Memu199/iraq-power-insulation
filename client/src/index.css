@@ -175,3 +175,39 @@ h2 em { color: var(--copper); font-style: normal; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .01ms !important; }
 }
+
+/* بطاقات خدمات مصوّرة: تُعرض كشبكة على الشاشات الكبيرة وتتدرج بوضوح على الأجهزة الأصغر. */
+.package-options { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.package-option { min-height: 318px; }
+.price-catalog { padding-top: clamp(30px, 4.8vw, 60px); }
+.catalog-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.service-price-card { display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-rows: 132px minmax(128px, auto); gap: 0; min-height: 0; padding: 0; overflow: hidden; border-right: 0; border-top: 3px solid transparent; box-shadow: 0 12px 28px rgba(22,25,28,.06); }
+.service-price-card:hover { transform: translateY(-5px); border-right-color: transparent; border-top-color: var(--copper); }
+.service-image-wrap { position: relative; grid-column: 1 / -1; overflow: hidden; background: var(--ink); }
+.service-image-wrap::after { content: ""; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(22,25,28,.43), transparent 58%); }
+.service-image-wrap img { width: 100%; height: 100%; object-fit: cover; filter: saturate(.68) contrast(1.03); transition: transform .45s cubic-bezier(.23,1,.32,1), filter .45s; }
+.service-price-card:hover .service-image-wrap img { transform: scale(1.07); filter: saturate(.9) contrast(1.06); }
+.service-index { position: absolute; z-index: 1; top: 11px; right: 11px; display: grid; width: 30px; height: 30px; place-items: center; background: var(--ivory); color: var(--ink); font-size: .62rem; }
+.service-price-copy { padding: 16px 15px 18px; }
+.service-price-card h4 { margin: 0 0 6px; font-size: .9rem; line-height: 1.5; }
+.service-price-card p { font-size: .57rem; line-height: 1.95; }
+.service-price-card > strong { align-self: end; margin: 0 15px 19px 0; color: var(--copper); font-size: 1.58rem; }
+.catalog-note { position: relative; z-index: 1; margin: 24px 0 0; padding: 13px 15px; border-right: 3px solid var(--copper); background: rgba(255,255,255,.58); color: #5d6364; font-size: .62rem; line-height: 2; }
+.catalog-note span { margin-left: 7px; color: var(--ink); font: 700 .76rem "Changa", sans-serif; }
+
+@media (min-width: 541px) and (max-width: 1000px) {
+  .catalog-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .package-options { grid-template-columns: repeat(3, minmax(210px, 1fr)); overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 3px; }
+  .package-option { scroll-snap-align: start; }
+}
+
+@media (max-width: 540px) {
+  .package-options { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 6px; }
+  .package-option { min-width: min(86vw, 330px); scroll-snap-align: start; }
+  .catalog-grid { grid-template-columns: 1fr; gap: 12px; }
+  .service-price-card { grid-template-rows: 126px minmax(116px, auto); }
+  .service-price-copy { padding: 14px 13px 16px; }
+  .service-price-card h4 { font-size: .82rem; }
+  .service-price-card p { font-size: .54rem; }
+  .service-price-card > strong { margin: 0 13px 17px 0; font-size: 1.42rem; }
+}
