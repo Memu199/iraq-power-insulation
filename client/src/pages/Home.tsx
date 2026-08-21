@@ -6,7 +6,6 @@ import { useEffect, useMemo, useState } from "react";
 import {
   ArrowDownLeft,
   ArrowLeft,
-  ArrowRight,
   Check,
   MapPin,
   Menu,
@@ -23,21 +22,18 @@ const ASSETS = {
   door: "/manus-storage/iraq-power-door-detail_313e09c9.jpg",
   roof: "/manus-storage/iraq-power-roof-detail_bf410580.jpg",
   mark: "/manus-storage/iraq-power-mark_f9326e6d.png",
-  small: [
-    "/manus-storage/menu-small-offer-1_4010b3dd.jpg",
-    "/manus-storage/menu-small-offer-2_a3546cf3.jpg",
-    "/manus-storage/menu-small-offer-3_9ed5699a.jpg",
-  ],
-  suv: [
-    "/manus-storage/menu-suv-offer-1_3296a72a.jpg",
-    "/manus-storage/menu-suv-offer-2_feccd249.jpg",
-    "/manus-storage/menu-suv-offer-3_ad04355c.jpg",
-  ],
-  large: [
-    "/manus-storage/menu-large-offer-1_58527c8c.jpg",
-    "/manus-storage/menu-large-offer-2_9f4da315.jpg",
-    "/manus-storage/menu-large-offer-3_603dc2a2.jpg",
-  ],
+};
+
+type ServicePrice = {
+  name: string;
+  price: string;
+  detail: string;
+};
+
+type PackageOffer = {
+  name: string;
+  price: string;
+  items: string[];
 };
 
 const vehicleTypes = [
@@ -46,27 +42,60 @@ const vehicleTypes = [
     title: "السيارات الصالون",
     sub: "العروض الأساسية",
     price: "من 40 ألف",
-    heroPrice: "450 ألف",
-    note: "باقة الأرضية والأبواب والصندوق",
-    services: ["الأرضية + الأبواب + الصندوق", "جامات السيارة من الخارج", "البنيد وباب الصندوق", "عزل بلاستك غرفة السيارة", "سقف السيارة ولوح خلف الكشنات"],
+    offers: [
+      { name: "العرض الكامل", price: "950 ألف", items: ["الأرضية + الأبواب + الصندوق", "جامات 4 من الخارج", "البنيد + باب الصندوق", "عازل بلاستك غرفة السيارة", "قاطع خلف الكشنات مع تغليف الداشبول الخلفي", "تغليف سقف السيارة"] },
+      { name: "العرض المختصر", price: "760 ألف", items: ["الأرضية + الأبواب + الصندوق", "جامات 4 من الخارج", "تغليف البنيد", "عازل بلاستك غرفة السيارة"] },
+    ] as PackageOffer[],
+    services: [
+      { name: "الأرضية + الأبواب + الصندوق", price: "450", detail: "عازل مرحلتين" },
+      { name: "جامات السيارة", price: "150", detail: "تغليف 4 جامات من الخارج بعازل مرحلتين" },
+      { name: "البنيد", price: "40", detail: "تغليف البنيد بعازل مرحلتين" },
+      { name: "باب الصندوق", price: "40", detail: "تغليف باب الصندوق بعازل مرحلتين" },
+      { name: "عازل بلاستك", price: "120", detail: "جميع أجزاء غرفة السيارة: تكملة، بطانة الباب، كفرات الصندوق" },
+      { name: "قاطع خلف الكشنات", price: "70", detail: "مع تغليف الداشبول الخلفي" },
+      { name: "تغليف سقف السيارة", price: "80", detail: "عازل مرحلتين" },
+      { name: "عازل الداشبول الأساسي", price: "220", detail: "فتح الداشبول وتغليفه خلف الداشبول بثلاث مراحل عازلة" },
+      { name: "عازل بلاستك الداشبول", price: "80", detail: "فتح كفرات الداشبول وتغليفها لمنع الأصوات" },
+    ] as ServicePrice[],
   },
   {
     id: "suv",
     title: "السيارات العالية",
     sub: "SUV والدفع الرباعي",
     price: "من 40 ألف",
-    heroPrice: "480 ألف",
-    note: "باقة الأرضية والأبواب والصندوق",
-    services: ["الأرضية + الأبواب + الصندوق", "جامات السيارة من الخارج", "البنيد وباب الصندوق", "عزل بلاستك غرفة السيارة", "سقف السيارة وعزل الداشبول"],
+    offers: [
+      { name: "العرض الكامل", price: "960 ألف", items: ["الأرضية + الأبواب + الصندوق", "جامات 4 من الخارج", "البنيد + باب الصندوق", "عازل بلاستك غرفة السيارة", "تغليف سقف السيارة"] },
+      { name: "العرض المختصر", price: "820 ألف", items: ["الأرضية + الأبواب + الصندوق", "جامات 4 من الخارج", "تغليف البنيد", "عازل بلاستك غرفة السيارة"] },
+    ] as PackageOffer[],
+    services: [
+      { name: "الأرضية + الأبواب + الصندوق", price: "480", detail: "عازل مرحلتين" },
+      { name: "جامات السيارة", price: "150", detail: "تغليف 4 جامات من الخارج بعازل مرحلتين" },
+      { name: "جامغ واحد من الخارج", price: "35", detail: "السعر الظاهر في عرض منفصل" },
+      { name: "البنيد", price: "40", detail: "تغليف البنيد بعازل مرحلتين" },
+      { name: "باب الصندوق", price: "40", detail: "تغليف باب الصندوق بعازل مرحلتين" },
+      { name: "عازل بلاستك", price: "150", detail: "جميع أجزاء غرفة السيارة: تكملة، بطانة الباب، كفرات الصندوق" },
+      { name: "تغليف سقف السيارة", price: "100", detail: "عازل مرحلتين" },
+      { name: "عازل الداشبول الأساسي", price: "250", detail: "فتح الداشبول وتغليفه خلف الداشبول بثلاث مراحل عازلة" },
+      { name: "عازل بلاستك الداشبول", price: "80", detail: "فتح كفرات الداشبول وتغليفها لمنع الأصوات" },
+    ] as ServicePrice[],
   },
   {
     id: "large",
     title: "السيارات الكبيرة",
     sub: "تاهو، جيب، جمس، أكسبلور، كرفان، سينا وسكويا",
     price: "من 40 ألف",
-    heroPrice: "500 ألف",
-    note: "باقة الأرضية والأبواب والصندوق",
-    services: ["الأرضية + الأبواب + الصندوق", "جامات السيارة من الخارج", "البنيد وباب الصندوق", "عزل بلاستك غرفة السيارة", "سقف السيارة وعزل الداشبول"],
+    offers: [
+      { name: "العرض الكامل", price: "1.050 مليون", items: ["الأرضية + الأبواب + الصندوق", "جامات 4 من الخارج", "البنيد + باب الصندوق", "عازل بلاستك غرفة السيارة", "تغليف سقف السيارة"] },
+      { name: "العرض المختصر", price: "880 ألف", items: ["الأرضية + الأبواب + الصندوق", "جامات 4 من الخارج", "تغليف البنيد", "عازل بلاستك غرفة السيارة"] },
+    ] as PackageOffer[],
+    services: [
+      { name: "الأرضية + الأبواب + الصندوق", price: "500", detail: "عازل مرحلتين" },
+      { name: "جامات السيارة", price: "180", detail: "تغليف 4 جامات من الخارج بعازل مرحلتين" },
+      { name: "البنيد", price: "50", detail: "تغليف البنيد بعازل مرحلتين" },
+      { name: "باب الصندوق", price: "40", detail: "تغليف باب الصندوق بعازل مرحلتين" },
+      { name: "عازل بلاستك", price: "150", detail: "جميع أجزاء غرفة السيارة: تكملة، بطانة الباب، كفرات الصندوق" },
+      { name: "تغليف سقف السيارة", price: "130", detail: "عازل مرحلتين" },
+    ] as ServicePrice[],
   },
 ];
 
@@ -96,7 +125,6 @@ export default function Home() {
   const [introVisible, setIntroVisible] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeVehicle, setActiveVehicle] = useState("small");
-  const [offerIndex, setOfferIndex] = useState(0);
 
   useEffect(() => {
     const timer = window.setTimeout(() => setIntroVisible(false), 2900);
@@ -107,23 +135,14 @@ export default function Home() {
     () => vehicleTypes.find((vehicle) => vehicle.id === activeVehicle) ?? vehicleTypes[0],
     [activeVehicle],
   );
-  const menuImages = ASSETS[activeVehicle as "small" | "suv" | "large"];
 
   const chooseVehicle = (id: string) => {
     setActiveVehicle(id);
-    setOfferIndex(0);
   };
 
   const scrollTo = (id: string) => {
     setMenuOpen(false);
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
-
-  const rotateOffer = (direction: "next" | "prev") => {
-    setOfferIndex((current) => {
-      if (direction === "next") return (current + 1) % menuImages.length;
-      return (current - 1 + menuImages.length) % menuImages.length;
-    });
   };
 
   return (
@@ -222,34 +241,43 @@ export default function Home() {
           ))}
         </div>
 
-        <div className="offer-stage">
-          <div className="offer-info">
-            <div className="offer-label">{activeType.sub}</div>
-            <div className="spec-stamp"><span>الحد الأدنى للخدمة</span><b>{activeType.price}</b></div>
-            <h3>{activeType.title}</h3>
-            <p>{activeType.note} <strong>{activeType.heroPrice}</strong></p>
-            <ul>
-              {activeType.services.map((service) => <li key={service}><Check size={16} />{service}</li>)}
-            </ul>
-            <a className="dark-cta" href="https://wa.me/9647731116813" target="_blank" rel="noreferrer">اطلب تسعيرة سيارتك <WhatsappIcon /></a>
+        <div className="price-hub" aria-live="polite">
+          <div className="package-summary">
+            <div className="summary-heading">
+              <span className="offer-label">{activeType.sub}</span>
+              <h3>العروض الإجمالية<br />لـ <em>{activeType.title}</em></h3>
+              <p>اختر العرض الكامل أو المختصر، ثم راجع تكلفة كل جزء أدناه بكل وضوح.</p>
+            </div>
+            <div className="package-options">
+              {activeType.offers.map((offer, index) => (
+                <article className={`package-option ${index === 0 ? "featured" : ""}`} key={offer.name}>
+                  <span className="package-number">0{index + 1}</span>
+                  <h4>{offer.name}</h4>
+                  <strong><small>السعر الكلي</small>{offer.price}</strong>
+                  <ul>
+                    {offer.items.map((item) => <li key={item}><Check size={14} />{item}</li>)}
+                  </ul>
+                  <a href="https://wa.me/9647731116813" target="_blank" rel="noreferrer">اطلب هذا العرض <WhatsappIcon /></a>
+                </article>
+              ))}
+            </div>
           </div>
 
-          <div className="menu-viewer">
-            <div className="viewer-topline">
-              <span>صورة القائمة الأصلية</span>
-              <b>عرض {offerIndex + 1} / {menuImages.length}</b>
+          <div className="price-catalog">
+            <div className="catalog-heading">
+              <span>تفاصيل التسعير</span>
+              <p>كل الأسعار أدناه <b>بالألف دينار عراقي</b>، بحسب القوائم المرسلة.</p>
             </div>
-            <div className="menu-image-frame">
-              <img src={menuImages[offerIndex]} alt={`قائمة عروض ${activeType.title} رقم ${offerIndex + 1}`} />
-              <div className="viewer-glow" />
+            <div className="catalog-grid">
+              {activeType.services.map((service, index) => (
+                <article className="service-price-card" key={`${service.name}-${service.price}`}>
+                  <span className="service-index">{String(index + 1).padStart(2, "0")}</span>
+                  <div><h4>{service.name}</h4><p>{service.detail}</p></div>
+                  <strong>{service.price}<small>ألف</small></strong>
+                </article>
+              ))}
             </div>
-            <div className="viewer-controls">
-              <button type="button" onClick={() => rotateOffer("prev")} aria-label="العرض السابق"><ArrowRight size={19} /></button>
-              <div className="viewer-dots">
-                {menuImages.map((_, index) => <button type="button" key={index} onClick={() => setOfferIndex(index)} className={offerIndex === index ? "active" : ""} aria-label={`انتقل إلى العرض ${index + 1}`} />)}
-              </div>
-              <button type="button" onClick={() => rotateOffer("next")} aria-label="العرض التالي"><ArrowLeft size={19} /></button>
-            </div>
+            <a className="catalog-cta" href="https://wa.me/9647731116813" target="_blank" rel="noreferrer">استفسر عن نوع سيارتك <WhatsappIcon /></a>
           </div>
         </div>
       </section>
