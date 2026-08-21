@@ -22,51 +22,40 @@ const ASSETS = {
   door: "/manus-storage/iraq-power-door-detail_313e09c9.jpg",
   roof: "/manus-storage/iraq-power-roof-detail_bf410580.jpg",
   mark: "/manus-storage/iraq-power-mark_f9326e6d.png",
-  floor: "/manus-storage/floor-doors-trunk_2d72bc28.jpg",
-  wheel: "/manus-storage/wheel-arches_601b3a75.jpg",
-  hood: "/manus-storage/hood_a78c082e.jpg",
-  trunk: "/manus-storage/trunk-door_37219edf.jpg",
-  plastic: "/manus-storage/plastic-insulation_400a47a4.jpg",
-  roofDetail: "/manus-storage/roof_f606956b.jpg",
-  dashboard: "/manus-storage/dashboard_6e5e54cc.jpg",
 };
 
 type ServicePrice = {
   name: string;
   price: string;
   detail: string;
-  image: string;
-  imageAlt: string;
 };
 
 type PackageOffer = {
   name: string;
   price: string;
   items: string[];
-  note?: string;
 };
 
 const vehicleTypes = [
   {
     id: "small",
     title: "السيارات الصالون",
-    sub: "سيدان وهاتشباك",
+    sub: "العروض الأساسية",
     price: "من 40 ألف",
     offers: [
-      { name: "العرض الأول", price: "بكج كامل", items: ["جميع القطع الرئيسية بعازل مرحلتين", "اختيار عازل الدشبول: أساسي أو بلاستك", "السعر يتحدد بحسب خيار الدشبول المختار"], note: "البكج الكامل" },
-      { name: "العرض الثاني", price: "950 ألف", items: ["باقة قطع محددة", "تخفيض شامل على السعر الكلي", "التفاصيل النهائية تُراجع مع المركز"], note: "السعر الكلي" },
-      { name: "العرض الثالث", price: "760 ألف", items: ["باقة قطع محددة", "تخفيض شامل على السعر الكلي", "التفاصيل النهائية تُراجع مع المركز"], note: "السعر الكلي" },
+      { name: "العرض الكامل", price: "950 ألف", items: ["الأرضية + الأبواب + الصندوق", "جامات 4 من الخارج", "البنيد + باب الصندوق", "عازل بلاستك غرفة السيارة", "قاطع خلف الكشنات مع تغليف الداشبول الخلفي", "تغليف سقف السيارة"] },
+      { name: "العرض المختصر", price: "760 ألف", items: ["الأرضية + الأبواب + الصندوق", "جامات 4 من الخارج", "تغليف البنيد", "عازل بلاستك غرفة السيارة"] },
     ] as PackageOffer[],
     services: [
-      { name: "الأرضية + الأبواب + الصندوق", price: "450", detail: "عازل مرحلتين للأجزاء الرئيسية", image: ASSETS.floor, imageAlt: "عزل أرضية وأبواب وصندوق السيارة" },
-      { name: "جاملغ السيارة", price: "150", detail: "عدد 4 من الخارج بعازل مرحلتين", image: ASSETS.wheel, imageAlt: "عزل جاملغ السيارة من الخارج" },
-      { name: "البنيد", price: "40", detail: "تغليف البنيد بعازل مرحلتين", image: ASSETS.hood, imageAlt: "عزل البنيد" },
-      { name: "باب الصندوق", price: "40", detail: "تغليف باب الصندوق بعازل مرحلتين", image: ASSETS.trunk, imageAlt: "عزل باب الصندوق" },
-      { name: "عازل بلاستك", price: "120", detail: "يشمل جميع أجزاء غرفة السيارة", image: ASSETS.plastic, imageAlt: "عازل بلاستك لأجزاء غرفة السيارة" },
-      { name: "قاطع خلف الكشنات", price: "70", detail: "تثبيت بليت خلف الكشنات الخلفية مع تغليف الدشبول الخلفي", image: ASSETS.dashboard, imageAlt: "عزل القسم الخلفي للمقصورة" },
-      { name: "تغليف القمارة", price: "80", detail: "عازل مرحلتين", image: ASSETS.roofDetail, imageAlt: "تغليف قمارة السيارة" },
-      { name: "عازل الدشبول الأساسي", price: "220", detail: "3 مراحل عازلة مع تفريغ غاز التبريد", image: ASSETS.dashboard, imageAlt: "عزل الدشبول الأساسي" },
-      { name: "عازل الدشبول الثانوي", price: "80", detail: "عزل بلاستك لكفرات الدشبول لمنع أصوات المطبات", image: ASSETS.dashboard, imageAlt: "عزل كفرات الدشبول" },
+      { name: "الأرضية + الأبواب + الصندوق", price: "450", detail: "عازل مرحلتين" },
+      { name: "جامات السيارة", price: "150", detail: "تغليف 4 جامات من الخارج بعازل مرحلتين" },
+      { name: "البنيد", price: "40", detail: "تغليف البنيد بعازل مرحلتين" },
+      { name: "باب الصندوق", price: "40", detail: "تغليف باب الصندوق بعازل مرحلتين" },
+      { name: "عازل بلاستك", price: "120", detail: "جميع أجزاء غرفة السيارة: تكملة، بطانة الباب، كفرات الصندوق" },
+      { name: "قاطع خلف الكشنات", price: "70", detail: "مع تغليف الداشبول الخلفي" },
+      { name: "تغليف سقف السيارة", price: "80", detail: "عازل مرحلتين" },
+      { name: "عازل الداشبول الأساسي", price: "220", detail: "فتح الداشبول وتغليفه خلف الداشبول بثلاث مراحل عازلة" },
+      { name: "عازل بلاستك الداشبول", price: "80", detail: "فتح كفرات الداشبول وتغليفها لمنع الأصوات" },
     ] as ServicePrice[],
   },
   {
@@ -75,19 +64,19 @@ const vehicleTypes = [
     sub: "SUV والدفع الرباعي",
     price: "من 40 ألف",
     offers: [
-      { name: "العرض الأول", price: "بكج كامل", items: ["جميع القطع الرئيسية بعازل مرحلتين", "اختيار عازل الدشبول: أساسي أو بلاستك", "السعر يتحدد بحسب خيار الدشبول المختار"], note: "البكج الكامل" },
-      { name: "العرض الثاني", price: "960 ألف", items: ["باقة قطع محددة", "تخفيض شامل على السعر الكلي", "التفاصيل النهائية تُراجع مع المركز"], note: "السعر الكلي" },
-      { name: "العرض الثالث", price: "820 ألف", items: ["باقة قطع محددة", "تخفيض شامل على السعر الكلي", "التفاصيل النهائية تُراجع مع المركز"], note: "السعر الكلي" },
+      { name: "العرض الكامل", price: "960 ألف", items: ["الأرضية + الأبواب + الصندوق", "جامات 4 من الخارج", "البنيد + باب الصندوق", "عازل بلاستك غرفة السيارة", "تغليف سقف السيارة"] },
+      { name: "العرض المختصر", price: "820 ألف", items: ["الأرضية + الأبواب + الصندوق", "جامات 4 من الخارج", "تغليف البنيد", "عازل بلاستك غرفة السيارة"] },
     ] as PackageOffer[],
     services: [
-      { name: "الأرضية + الأبواب + الصندوق", price: "480", detail: "عازل مرحلتين للأجزاء الرئيسية", image: ASSETS.floor, imageAlt: "عزل أرضية وأبواب وصندوق سيارة SUV" },
-      { name: "جاملغ السيارة", price: "150", detail: "من الخارج؛ 35 ألف للجاملغ الواحد حسب القائمة", image: ASSETS.wheel, imageAlt: "عزل جاملغ سيارة SUV" },
-      { name: "البنيد", price: "40", detail: "تغليف البنيد بعازل مرحلتين", image: ASSETS.hood, imageAlt: "عزل بنيد سيارة SUV" },
-      { name: "باب الصندوق", price: "40", detail: "تغليف باب الصندوق بعازل مرحلتين", image: ASSETS.trunk, imageAlt: "عزل باب صندوق سيارة SUV" },
-      { name: "عازل بلاستك", price: "150", detail: "يشمل جميع أجزاء غرفة السيارة", image: ASSETS.plastic, imageAlt: "عازل بلاستك لسيارة SUV" },
-      { name: "تغليف القمارة", price: "100", detail: "عازل مرحلتين", image: ASSETS.roofDetail, imageAlt: "تغليف قمارة سيارة SUV" },
-      { name: "عازل الدشبول الأساسي", price: "250", detail: "3 مراحل عازلة مع تفريغ غاز التبريد", image: ASSETS.dashboard, imageAlt: "عزل دشبول سيارة SUV" },
-      { name: "عازل الدشبول الثانوي", price: "80", detail: "عزل بلاستك لكفرات الدشبول فقط", image: ASSETS.dashboard, imageAlt: "عزل كفرات دشبول سيارة SUV" },
+      { name: "الأرضية + الأبواب + الصندوق", price: "480", detail: "عازل مرحلتين" },
+      { name: "جامات السيارة", price: "150", detail: "تغليف 4 جامات من الخارج بعازل مرحلتين" },
+      { name: "جامغ واحد من الخارج", price: "35", detail: "السعر الظاهر في عرض منفصل" },
+      { name: "البنيد", price: "40", detail: "تغليف البنيد بعازل مرحلتين" },
+      { name: "باب الصندوق", price: "40", detail: "تغليف باب الصندوق بعازل مرحلتين" },
+      { name: "عازل بلاستك", price: "150", detail: "جميع أجزاء غرفة السيارة: تكملة، بطانة الباب، كفرات الصندوق" },
+      { name: "تغليف سقف السيارة", price: "100", detail: "عازل مرحلتين" },
+      { name: "عازل الداشبول الأساسي", price: "250", detail: "فتح الداشبول وتغليفه خلف الداشبول بثلاث مراحل عازلة" },
+      { name: "عازل بلاستك الداشبول", price: "80", detail: "فتح كفرات الداشبول وتغليفها لمنع الأصوات" },
     ] as ServicePrice[],
   },
   {
@@ -96,19 +85,16 @@ const vehicleTypes = [
     sub: "تاهو، جيب، جمس، أكسبلور، كرفان، سينا وسكويا",
     price: "من 40 ألف",
     offers: [
-      { name: "العرض الأول", price: "بكج كامل", items: ["جميع القطع الرئيسية بعازل مرحلتين", "اختيار عازل الدشبول: أساسي أو بلاستك", "السعر يتحدد بحسب خيار الدشبول المختار"], note: "البكج الكامل" },
-      { name: "العرض الثاني", price: "1.050 مليون", items: ["باقة قطع محددة", "تخفيض شامل على السعر الكلي", "التفاصيل النهائية تُراجع مع المركز"], note: "السعر الكلي" },
-      { name: "العرض الثالث", price: "880 ألف", items: ["باقة قطع محددة", "تخفيض شامل على السعر الكلي", "التفاصيل النهائية تُراجع مع المركز"], note: "السعر الكلي" },
+      { name: "العرض الكامل", price: "1.050 مليون", items: ["الأرضية + الأبواب + الصندوق", "جامات 4 من الخارج", "البنيد + باب الصندوق", "عازل بلاستك غرفة السيارة", "تغليف سقف السيارة"] },
+      { name: "العرض المختصر", price: "880 ألف", items: ["الأرضية + الأبواب + الصندوق", "جامات 4 من الخارج", "تغليف البنيد", "عازل بلاستك غرفة السيارة"] },
     ] as PackageOffer[],
     services: [
-      { name: "الأرضية + الأبواب + الصندوق", price: "500", detail: "عازل مرحلتين للأجزاء الرئيسية", image: ASSETS.floor, imageAlt: "عزل أرضية وأبواب وصندوق سيارة كبيرة" },
-      { name: "جاملغ السيارة", price: "180", detail: "عدد 4 من الخارج بعازل مرحلتين", image: ASSETS.wheel, imageAlt: "عزل جاملغ سيارة كبيرة" },
-      { name: "البنيد", price: "50", detail: "تغليف البنيد بعازل مرحلتين", image: ASSETS.hood, imageAlt: "عزل بنيد سيارة كبيرة" },
-      { name: "باب الصندوق", price: "40", detail: "تغليف باب الصندوق بعازل مرحلتين", image: ASSETS.trunk, imageAlt: "عزل باب صندوق سيارة كبيرة" },
-      { name: "عازل بلاستك", price: "150", detail: "يشمل التكمة وبطانة الباب وكفرات الصندوق", image: ASSETS.plastic, imageAlt: "عازل بلاستك للسيارة الكبيرة" },
-      { name: "تغليف القمارة", price: "130", detail: "عازل مرحلتين", image: ASSETS.roofDetail, imageAlt: "تغليف قمارة سيارة كبيرة" },
-      { name: "عازل الدشبول الأساسي", price: "300", detail: "فتح الدشبول وتغليفه من الخلف بـ3 مراحل؛ يتطلب تفريغ غاز التبريد", image: ASSETS.dashboard, imageAlt: "عزل دشبول أساسي لسيارة كبيرة" },
-      { name: "عازل الدشبول الثانوي", price: "80", detail: "عزل بلاستك لكفرات الدشبول لمنع أصوات المطبات", image: ASSETS.dashboard, imageAlt: "عزل كفرات دشبول سيارة كبيرة" },
+      { name: "الأرضية + الأبواب + الصندوق", price: "500", detail: "عازل مرحلتين" },
+      { name: "جامات السيارة", price: "180", detail: "تغليف 4 جامات من الخارج بعازل مرحلتين" },
+      { name: "البنيد", price: "50", detail: "تغليف البنيد بعازل مرحلتين" },
+      { name: "باب الصندوق", price: "40", detail: "تغليف باب الصندوق بعازل مرحلتين" },
+      { name: "عازل بلاستك", price: "150", detail: "جميع أجزاء غرفة السيارة: تكملة، بطانة الباب، كفرات الصندوق" },
+      { name: "تغليف سقف السيارة", price: "130", detail: "عازل مرحلتين" },
     ] as ServicePrice[],
   },
 ];
@@ -260,14 +246,14 @@ export default function Home() {
             <div className="summary-heading">
               <span className="offer-label">{activeType.sub}</span>
               <h3>العروض الإجمالية<br />لـ <em>{activeType.title}</em></h3>
-              <p>العرض الأول هو البكج الكامل مع اختيار نوع عزل الدشبول. العرضان الثاني والثالث باقات مخفّضة بسعر إجمالي محدد.</p>
+              <p>اختر العرض الكامل أو المختصر، ثم راجع تكلفة كل جزء أدناه بكل وضوح.</p>
             </div>
             <div className="package-options">
               {activeType.offers.map((offer, index) => (
                 <article className={`package-option ${index === 0 ? "featured" : ""}`} key={offer.name}>
                   <span className="package-number">0{index + 1}</span>
                   <h4>{offer.name}</h4>
-                  <strong><small>{offer.note ?? "السعر الكلي"}</small>{offer.price}</strong>
+                  <strong><small>السعر الكلي</small>{offer.price}</strong>
                   <ul>
                     {offer.items.map((item) => <li key={item}><Check size={14} />{item}</li>)}
                   </ul>
@@ -285,16 +271,12 @@ export default function Home() {
             <div className="catalog-grid">
               {activeType.services.map((service, index) => (
                 <article className="service-price-card" key={`${service.name}-${service.price}`}>
-                  <div className="service-image-wrap">
-                    <img src={service.image} alt={service.imageAlt} />
-                    <span className="service-index">{String(index + 1).padStart(2, "0")}</span>
-                  </div>
-                  <div className="service-price-copy"><h4>{service.name}</h4><p>{service.detail}</p></div>
+                  <span className="service-index">{String(index + 1).padStart(2, "0")}</span>
+                  <div><h4>{service.name}</h4><p>{service.detail}</p></div>
                   <strong>{service.price}<small>ألف</small></strong>
                 </article>
               ))}
             </div>
-            <p className="catalog-note"><span>ملاحظة العمل</span> الأجزاء الرئيسية تُنفّذ بعازل مرحلتين. يوصى بمراسلتنا للتأكد من تفاصيل الباقة المناسبة لنوع سيارتك.</p>
             <a className="catalog-cta" href="https://wa.me/9647731116813" target="_blank" rel="noreferrer">استفسر عن نوع سيارتك <WhatsappIcon /></a>
           </div>
         </div>
